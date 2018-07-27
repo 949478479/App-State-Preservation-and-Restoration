@@ -153,7 +153,7 @@
 
 ```objective-c
 + (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents
-												            coder:(NSCoder *)coder;
+                                                            coder:(NSCoder *)coder;
 ```
 
 如果该协议方法返回了 `nil`，则向系统表明此视图控制器不需要被恢复。
@@ -178,16 +178,16 @@
 
 ```objective-c
 + (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents
-															coder:(NSCoder *)coder
+                                                            coder:(NSCoder *)coder
 {
-	// 此视图控制器最初是通过故事版加载的，因此可以获取相应的故事版来创建它
-	UIStoryboard *storyboard = [coder decodeObjectForKey:UIStateRestorationViewControllerStoryboardKey];
+    // 此视图控制器最初是通过故事版加载的，因此可以获取相应的故事版来创建它
+    UIStoryboard *storyboard = [coder decodeObjectForKey:UIStateRestorationViewControllerStoryboardKey];
 	
-	// 路径数组的最后一个元素即是该视图控制器的恢复标识符
-	NSString *identifier = identifierComponents.lastObject;
+    // 路径数组的最后一个元素即是该视图控制器的恢复标识符
+    NSString *identifier = identifierComponents.lastObject;
 	
-	// 在这个例子中，该视图控制器的恢复标识符沿用了故事版标识符
-	return [storyboard instantiateViewControllerWithIdentifier:identifier];
+    // 在这个例子中，该视图控制器的恢复标识符沿用了故事版标识符
+    return [storyboard instantiateViewControllerWithIdentifier:identifier];
 }
 ```
 
@@ -252,12 +252,12 @@ NSString *const UIApplicationStateRestorationSystemVersionKey;
 视图 | 保存的状态
 :---:|:---:
 `UICollectionView` | 类参考貌似没写
-`UIImageView` 	  | `bounds`、`center`、`frame`、`transform`，以及图层的 `anchorPoint`
-`UIScrollView`	  | `zoomScale`、`contentInset`、`contentOffset`
-`UITableView` 	  | 选中行和最上层的可见行
-`UITextField` 	  | `selectedTextRange`
-`UITextView`  	  | `selectedRange`、`editable`
-`UIWebView`  		  | URL history, the scaling and scrolling positions for each page, and information about which page is currently being viewed.
+`UIImageView` 	   | `bounds`、`center`、`frame`、`transform`，以及图层的 `anchorPoint`
+`UIScrollView`	   | `zoomScale`、`contentInset`、`contentOffset`
+`UITableView` 	   | 选中行和最上层的可见行
+`UITextField` 	   | `selectedTextRange`
+`UITextView`  	   | `selectedRange`、`editable`
+`UIWebView`  	   | URL历史记录，每个页面的缩放和滚动位置，以及有关当前正在查看哪个页面的信息
 
 其他框架可能也有会保存状态的视图，请参阅相应的类参考。
 
@@ -270,25 +270,24 @@ NSString *const UIApplicationStateRestorationSystemVersionKey;
 // 保存文本选中范围
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
-	[super encodeRestorableStateWithCoder:coder];
-
-	NSRange range = self.selectionRange;
-	[coder encodeInt:range.length forKey:kMyTextViewSelectionRangeLength];
-	[coder encodeInt:range.location forKey:kMyTextViewSelectionRangeLocation];
+    [super encodeRestorableStateWithCoder:coder];
+    NSRange range = self.selectionRange;
+    [coder encodeInt:range.length forKey:kMyTextViewSelectionRangeLength];
+    [coder encodeInt:range.location forKey:kMyTextViewSelectionRangeLocation];
 }
 
 // 恢复文本选中范围
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder
 {
-	[super decodeRestorableStateWithCoder:coder];
-
-	NSRange range;
-	range.length = [coder decodeIntForKey:kMyTextViewSelectionRangeLength];
-	range.location = [coder decodeIntForKey:kMyTextViewSelectionRangeLocation];
-
-	if (range.length > 0) {
-		[self setSelectionRange:range];
-	}
+    [super decodeRestorableStateWithCoder:coder];
+    
+    NSRange range;
+    range.length = [coder decodeIntForKey:kMyTextViewSelectionRangeLength];
+    range.location = [coder decodeIntForKey:kMyTextViewSelectionRangeLocation];
+    
+    if (range.length > 0) {
+        [self setSelectionRange:range];
+    }
 }
 ```
 
