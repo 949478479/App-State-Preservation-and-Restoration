@@ -114,7 +114,7 @@
 - 通过应用程序代理方法编码和解码应用的版本信息和其他附加信息。详情参阅 [保存应用级别的状态](#Preserving_Your_App’s_High_Level_State)。
 - 为 `UITableView` 和 `UICollectionView` 的数据源实现 `UIDataSourceModelAssociation` 协议。详情参阅 [实现能应对变化的数据源](#Implementing_Preservation_Friendly_Data_Sources)。
 
-<a name="Enabling_State_Preservation_and_Restoration_in_Your_App">
+<a name="Enabling_State_Preservation_and_Restoration_in_Your_App"></a>
 ## 在应用中启用状态保存和恢复功能
 
 状态保存和恢复功能默认是关闭的，需要通过如下两个代理方法来开启该功能。一般返回 `YES` 即可，也可以比较应用的版本号后再决定。
